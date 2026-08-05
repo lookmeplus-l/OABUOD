@@ -63,28 +63,26 @@ gradle wrapper --gradle-version 8.7
 
 未配置签名 secrets 时，release APK 使用 debug 证书签名，可直接安装测试。
 
-### 正式签名（可选）
+### 固定签名（已配置）
 
-发布正式版本时，在仓库 `Settings -> Secrets and variables -> Actions` 中配置以下 secrets：
+本仓库已配置固定的正式签名：签名 keystore 以 base64 编码存放在 `KEYSTORE_BASE64`，密码与别名以明文存放在 `KEYSTORE_PASSWORD`、`KEY_PASSWORD`、`KEY_ALIAS`（仓库 `Settings -> Secrets and variables -> Actions`）。CI 构建时自动解码并使用该签名，产出可直接上架的正式签名 APK。
 
-| Secret | 说明 |
+| Secret | 内容 |
 |--------|------|
 | `KEYSTORE_BASE64` | 签名 keystore 文件的 base64 编码 |
 | `KEYSTORE_PASSWORD` | keystore 密码 |
 | `KEY_ALIAS` | 密钥别名 |
 | `KEY_PASSWORD` | 密钥密码 |
 
-生成 keystore 示例：
+签名参数：
 
-```bash
-keytool -genkeypair -v -keystore oabuod-release.jks \
-  -alias oabuod -keyalg RSA -keysize 2048 -validity 10000
+- 别名：`oabuod`
+- 证书：`CN=OABUOD, OU=R23 Studio, O=R23 Studio, L=Beijing, ST=Beijing, C=CN`
+- 算法：RSA 2048，有效期 10000 天
 
-# base64 编码后填入 KEYSTORE_BASE64
-base64 -w 0 oabuod-release.jks
-```
+**重要**：请务必在本地妥善备份签名 keystore（`keystore/oabuod-release.jks`）与密码。丢失签名密钥将无法对已发布应用发布更新（Android 要求同一应用的升级包必须使用相同签名）。
 
-配置后打 tag 推送即可发布带签名的正式版 APK：
+推送任意分支或打 tag 后，CI 都会使用该固定签名编译 APK：
 
 ```bash
 git tag v1.0.0
