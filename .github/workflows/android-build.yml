@@ -57,12 +57,16 @@ jobs:
 
       - name: Verify APK signature
         run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "build-tools dirs:"; ls "$ANDROID_HOME"/build-tools/ 2>/dev/null || echo "(none)"
           APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner 2>/dev/null | tail -1)
+          echo "apksigner=$APKSIGNER"
           if [ -z "$APKSIGNER" ]; then
             echo "::error::apksigner not found under \$ANDROID_HOME/build-tools"
             exit 1
           fi
-          CERT=$("$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk 2>/dev/null | grep "Signer #1 certificate DN" || true)
+          "$APKSIGNER" --version 2>&1
+          CERT=$("$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk 2>&1 | grep -i "certificate DN" || true)
           echo "APK signer: $CERT"
           if [ -n "$KEYSTORE_BASE64" ]; then
             if echo "$CERT" | grep -q "OABUOD"; then
