@@ -1,0 +1,33 @@
+{
+  "selectors": {
+    "chatInput": [
+      "textarea[data-testid=\"chat_input\"]",
+      "textarea",
+      "div[contenteditable=\"true\"]",
+      "input[type=\"text\"]"
+    ],
+    "sendButton": [
+      "button[aria-label=\"发送\"]",
+      "button[data-testid=\"send\"]",
+      "button[type=\"submit\"]"
+    ],
+    "messageList": [
+      "main",
+      "body"
+    ],
+    "qrImage": [
+      "canvas",
+      "img[alt*=\"二维码\"]",
+      "img[src*=\"qr\"]"
+    ]
+  },
+  "agents": {
+    "chat": "",
+    "image": "图像生成",
+    "video": "视频生成",
+    "officeDoc": "AI 文档",
+    "officeTable": "AI 表格",
+    "officeSlide": "AI PPT",
+    "officeMind": "思维导图"
+  }
+}

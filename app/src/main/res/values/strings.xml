@@ -2,4 +2,40 @@
 <resources>
     <string name="app_name">OABUOD</string>
     <string name="loading">正在加载…</string>
+
+    <string name="nav_home">首页</string>
+    <string name="nav_chat">对话</string>
+    <string name="nav_image">生图</string>
+    <string name="nav_video">视频</string>
+    <string name="nav_office">办公</string>
+
+    <string name="home_welcome">欢迎使用 OABUOD</string>
+    <string name="home_subtitle">AI 对话、图片生成、视频创作、办公任务，全部由豆包官方引擎驱动</string>
+    <string name="home_login_status_unknown">登录状态检测中…</string>
+    <string name="home_logged_in">已登录</string>
+    <string name="home_not_logged_in">未登录，点击去登录</string>
+
+    <string name="chat_input_hint">输入消息，回车发送…</string>
+    <string name="chat_send">发送</string>
+    <string name="chat_thinking">正在思考…</string>
+
+    <string name="task_prompt_hint">输入提示词，生成结果将同步到豆包执行…</string>
+    <string name="task_generate">生成</string>
+    <string name="task_generating">生成中，请稍候…</string>
+    <string name="task_result_hint">生成结果会显示在这里</string>
+    <string name="task_no_result">暂无结果，请输入提示词开始生成</string>
+
+    <string name="office_doc">AI 文档</string>
+    <string name="office_table">AI 表格</string>
+    <string name="office_slide">AI PPT</string>
+    <string name="office_mind">思维导图</string>
+
+    <string name="login_title">扫码登录豆包</string>
+    <string name="login_hint">请使用豆包 App 或手机扫码登录</string>
+    <string name="login_done">登录完成</string>
+    <string name="login_cancel">取消</string>
+    <string name="login_waiting_qr">正在获取二维码…</string>
+    <string name="login_not_ready">尚未检测到登录，请确认已完成扫码</string>
+    <string name="login_success">登录成功</string>
+    <string name="login_open_webview">无法提取二维码，点击在网页中登录</string>
 </resources>

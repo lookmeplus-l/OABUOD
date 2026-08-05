@@ -4,4 +4,11 @@
     <color name="oabuod_primary_dark">#0D2B52</color>
     <color name="oabuod_accent">#35B6FF</color>
     <color name="ic_launcher_background">#16498C</color>
+    <color name="oabuod_bg">#FFFFFF</color>
+    <color name="oabuod_bg_light">#F3F5F9</color>
+    <color name="oabuod_bubble_user">#16498C</color>
+    <color name="oabuod_bubble_ai">#E9EFF7</color>
+    <color name="oabuod_text_main">#1A1A1A</color>
+    <color name="oabuod_text_sub">#6B7280</color>
+    <color name="oabuod_divider">#E5E7EB</color>
 </resources>
