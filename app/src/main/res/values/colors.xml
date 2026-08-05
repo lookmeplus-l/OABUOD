@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="oabuod_primary">#16498C</color>
+    <color name="oabuod_primary_dark">#0D2B52</color>
+    <color name="oabuod_accent">#35B6FF</color>
+    <color name="ic_launcher_background">#16498C</color>
+</resources>

@@ -1,0 +1,20 @@
+# Gradle
+.gradle/
+build/
+app/build/
+
+# Local configuration
+local.properties
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.vscode/
+captures/
+.externalNativeBuild
+.cxx
+
+# OS
+.DS_Store
