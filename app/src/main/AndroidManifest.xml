@@ -44,11 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize|uiMode|density"
-            android:exported="false" />
     </application>
 
 </manifest>

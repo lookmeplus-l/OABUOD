@@ -35,7 +35,7 @@ OABUOD 是一款基于 Java 原生开发的 Android AI 客户端。它采用「�
 - 对话：App 输入消息自动填入豆包发送，回复流式同步回 App 气泡显示
 - 生图 / 视频：App 输入提示词，映射到豆包对应创作功能，结果图同步展示
 - 办公：AI 文档 / 表格 / PPT / 思维导图四种任务切换
-- 扫码登录：后端 WebView 打开豆包登录页，JS 提取二维码元素并搬移到 App 界面，配合「登录完成 / 取消」按钮完成登录
+- 扫码登录：未登录时展示豆包登录页（App 内 WebView 直接打开豆包网页），支持扫码或账号密码登录，配合「登录完成 / 取消」按钮完成登录
 - 会话保持：Cookie + localStorage 持久化，重启免重复登录
 - 桌面 UA 模式获得豆包完整功能，支持文件上传、下载
 
@@ -65,8 +65,8 @@ OABUOD 是一款基于 Java 原生开发的 Android AI 客户端。它采用「�
 
 ## 双向同步原理
 
-1. **App → 豆包**：发送消息时调用 `DoubaoEngine.sendMessage(text, agentKey)`，注入脚本定位豆包输入框，用 React 原生 value setter + `input` 事件填充文本，再点击发送按钮（或回退触发回车）。生图/视频/办公先通过 `switchAgent()` 点击豆包侧边栏对应功能入口再发送。
-2. **豆包 → App**：注入脚本在消息列表容器上挂 `MutationObserver`，内容变化后提取增量文本与新增图片（blob 转 data URL），通过 `DoubaoNative.onEvent('diff', ...)` 回传，App 端追加到当前气泡/结果卡片。
+1. **App → 豆包**：发送消息时调用 `DoubaoEngine.sendMessage(text, agentKey)`，注入脚本定位豆包输入框，用 React 原生 value setter + `input` 事件填充文本，再点击发送按钮（或回退触发回车）。生图/视频/办公先通过 `switchAgent()` 点击豆包侧边栏对应功能入口再发送。发送后重置文本快照，之后的新增内容才是 AI 回复。
+2. **豆包 → App**：注入脚本在消息列表容器上挂 `MutationObserver`，内容变化后与快照比较提取增量文本与新增图片（blob 转 data URL），通过 `DoubaoNative.onEvent('diff', ...)` 回传，App 端追加到当前气泡/结果卡片。
 
 ## 本地构建
 

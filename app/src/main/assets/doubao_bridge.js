@@ -157,13 +157,23 @@
         if (text.length > lastText.length && text.indexOf(lastText) === 0) {
             newText = text.substring(lastText.length);
         } else if (text.length > lastText.length) {
-            newText = text.substring(Math.max(0, text.length - lastText.length));
+            var idx = text.indexOf(lastText);
+            if (idx >= 0) {
+                newText = text.substring(idx + lastText.length);
+            } else {
+                // 结构变化导致无法对齐：保守丢弃，防止把欢迎页等无关内容同步到 App
+                newText = '';
+            }
         }
-        lastText = text;
-        collectImages(container, function (images) {
-            var payload = JSON.stringify({ text: newText, images: images });
-            window.DoubaoNative.onEvent('diff', payload);
-        });
+        if (newText.length > 0) {
+            lastText = text;
+            collectImages(container, function (images) {
+                var payload = JSON.stringify({ text: newText, images: images });
+                window.DoubaoNative.onEvent('diff', payload);
+            });
+        } else {
+            lastText = text;
+        }
     }
 
     function extractQr() {
@@ -220,12 +230,22 @@
             if (!input) return 'no-input';
             setReactInput(input, text);
             var btn = findSendButton(input);
+            var result = 'sent';
             if (btn) {
                 btn.click();
-                return 'sent';
+            } else {
+                input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
+                result = 'sent-enter';
             }
-            input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', code: 'Enter', keyCode: 13, bubbles: true }));
-            return 'sent-enter';
+            // 等待 React 将用户消息渲染进列表后重置快照，之后的新增内容才是 AI 回复
+            var self = this;
+            setTimeout(function () { self.resetSnapshot(); }, 600);
+            return result;
+        },
+
+        resetSnapshot: function () {
+            var container = findMessageContainer();
+            lastText = (container ? container.innerText : '') || '';
         },
 
         switchAgent: function (name) {
@@ -267,7 +287,9 @@
         startObserving: function () {
             if (observed) return;
             observed = true;
+            // 初始化文本快照，避免把页面已有内容（欢迎页/推荐卡片）当作增量同步
             var container = findMessageContainer();
+            lastText = (container ? container.innerText : '') || '';
             var target = container || document.body;
             var lastChange = Date.now();
             new MutationObserver(function () {

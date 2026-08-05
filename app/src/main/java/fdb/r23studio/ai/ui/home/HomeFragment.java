@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import fdb.r23studio.ai.App;
 import fdb.r23studio.ai.MainActivity;
 import fdb.r23studio.ai.R;
-import fdb.r23studio.ai.ui.login.LoginActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -44,7 +43,11 @@ public class HomeFragment extends Fragment {
         cardVideo.setOnClickListener(v -> switchTab(R.id.nav_video));
         cardOffice.setOnClickListener(v -> switchTab(R.id.nav_office));
 
-        goLogin.setOnClickListener(v -> startActivity(new Intent(requireContext(), LoginActivity.class)));
+        goLogin.setOnClickListener(v -> {
+            if (requireActivity() instanceof MainActivity) {
+                ((MainActivity) requireActivity()).showLoginOverlay();
+            }
+        });
     }
 
     @Override

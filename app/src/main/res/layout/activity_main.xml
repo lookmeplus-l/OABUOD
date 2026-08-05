@@ -11,6 +11,7 @@
         android:alpha="0" />
 
     <LinearLayout
+        android:id="@+id/ui_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/oabuod_bg"
@@ -32,6 +33,72 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav" />
 
+    </LinearLayout>
+
+    <!-- 登录覆盖层：中间区域透明，直接显示底层 WebView 中的豆包登录页 -->
+    <LinearLayout
+        android:id="@+id/login_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6000000"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_overlay_title"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/login_overlay_hint"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E6000000"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <Button
+                android:id="@+id/btn_login_done"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="@color/oabuod_primary"
+                android:text="@string/login_done"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_login_cancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="#4DFFFFFF"
+                android:text="@string/login_cancel"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
