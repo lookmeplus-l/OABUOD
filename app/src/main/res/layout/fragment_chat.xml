@@ -5,6 +5,97 @@
     android:background="@color/oabuod_bg"
     android:orientation="vertical">
 
+    <!-- 顶部工具栏：仿豆包手机端聊天页 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/oabuod_primary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/chat_login_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_login_status"
+            android:paddingStart="12dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            android:text="@string/home_not_logged_in"
+            android:textColor="@color/oabuod_primary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- 快捷功能条：仿豆包首页功能区，点击切换到对应任务页 -->
+    <LinearLayout
+        android:id="@+id/chat_quick_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/quick_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_chip"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/nav_image"
+            android:textColor="@color/oabuod_text_main"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/quick_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_chip"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/nav_video"
+            android:textColor="@color/oabuod_text_main"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/quick_office"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/bg_chip"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/nav_office"
+            android:textColor="@color/oabuod_text_main"
+            android:textSize="14sp" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_list"
         android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fdb.r23studio.ai.App;
+import fdb.r23studio.ai.MainActivity;
 import fdb.r23studio.ai.R;
 import fdb.r23studio.ai.core.DoubaoEngine;
 import fdb.r23studio.ai.core.JsBridge;
@@ -31,6 +33,7 @@ public class ChatFragment extends Fragment implements JsBridge.EventListener {
     private RecyclerView list;
     private EditText input;
     private Button sendButton;
+    private TextView loginStatus;
     private final List<ChatMessage> messages = new ArrayList<>();
     private ChatAdapter adapter;
     private ChatMessage currentAi;
@@ -47,13 +50,46 @@ public class ChatFragment extends Fragment implements JsBridge.EventListener {
         list = view.findViewById(R.id.chat_list);
         input = view.findViewById(R.id.chat_input);
         sendButton = view.findViewById(R.id.chat_send);
+        loginStatus = view.findViewById(R.id.chat_login_status);
 
         adapter = new ChatAdapter(messages);
         list.setLayoutManager(new LinearLayoutManager(requireContext()));
         list.setAdapter(adapter);
 
         sendButton.setOnClickListener(v -> send());
+        updateLoginStatus();
+
+        loginStatus.setOnClickListener(v -> {
+            if (!App.get().isLoggedIn() && getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).showLoginOverlay();
+            } else {
+                Toast.makeText(requireContext(), R.string.home_logged_in, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 快捷功能条：生图 / 视频 / 办公
+        view.findViewById(R.id.quick_image).setOnClickListener(v -> switchTab(R.id.nav_image));
+        view.findViewById(R.id.quick_video).setOnClickListener(v -> switchTab(R.id.nav_video));
+        view.findViewById(R.id.quick_office).setOnClickListener(v -> switchTab(R.id.nav_office));
+
         App.get().getJsBridge().addListener(this);
+    }
+
+    private void switchTab(int itemId) {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).switchToTab(itemId);
+        }
+    }
+
+    private void updateLoginStatus() {
+        if (loginStatus == null) return;
+        loginStatus.setText(App.get().isLoggedIn() ? R.string.home_logged_in : R.string.home_not_logged_in);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateLoginStatus();
     }
 
     @Override

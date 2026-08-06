@@ -271,6 +271,37 @@
             return false;
         },
 
+        triggerScanLogin: function () {
+            // 先点击右上角「登录」打开登录面板
+            var opened = this.clickLogin();
+            var self = this;
+            setTimeout(function () {
+                // 在面板中寻找并点击「扫码登录」/「打开豆包 App 扫码登录」
+                var clicked = false;
+                var cands = document.querySelectorAll('button, a, span, div, [role="button"]');
+                for (var i = 0; i < cands.length; i++) {
+                    var t = (cands[i].innerText || '').trim();
+                    if (t === '扫码登录' || t === '打开豆包App扫码登录') {
+                        cands[i].click();
+                        clicked = true;
+                        break;
+                    }
+                }
+                if (!clicked) {
+                    for (var j = 0; j < cands.length; j++) {
+                        var t2 = (cands[j].innerText || '').trim();
+                        if (t2.indexOf('扫码') > -1 && t2.length <= 14) {
+                            cands[j].click();
+                            clicked = true;
+                            break;
+                        }
+                    }
+                }
+                window.DoubaoNative.onEvent('login-panel', clicked ? 'scan-clicked' : 'no-scan-button');
+            }, opened ? 800 : 300);
+            return opened;
+        },
+
         isLoggedIn: function () {
             var cookies = document.cookie || '';
             var hasSession = cookies.indexOf('session') > -1 || cookies.indexOf('sid') > -1 || cookies.indexOf('token') > -1;

@@ -46,12 +46,18 @@ public class DoubaoEngine {
 
     private ValueCallback<Uri[]> filePathCallback;
     private Activity activity;
+    private Runnable pageLoadedListener;
 
     public void init(Activity activity, WebView wv, JsBridge bridge) {
         this.activity = activity;
         this.webView = wv;
         this.jsBridge = bridge;
         configureWebView();
+    }
+
+    /** 页面（含 reload）加载完成后回调，用于登录覆盖层自动打开扫码面板 */
+    public void setOnPageLoadedListener(Runnable listener) {
+        this.pageLoadedListener = listener;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -98,6 +104,9 @@ public class DoubaoEngine {
                 super.onPageFinished(view, url);
                 if (isDoubaoHost(url)) {
                     injectBridge();
+                    if (pageLoadedListener != null) {
+                        view.post(pageLoadedListener);
+                    }
                 }
             }
 
@@ -201,6 +210,10 @@ public class DoubaoEngine {
 
     public void triggerLogin(JsCallback callback) {
         evaluateJs("DoubaoBridge.clickLogin();", callback);
+    }
+
+    public void triggerScanLogin(JsCallback callback) {
+        evaluateJs("DoubaoBridge.triggerScanLogin();", callback);
     }
 
     public void isLoggedIn(JsCallback callback) {

@@ -35,7 +35,7 @@
 
     </LinearLayout>
 
-    <!-- 登录覆盖层：中间区域透明，直接显示底层 WebView 中的豆包登录页 -->
+    <!-- 登录覆盖层：顶部显示 App 内二维码，下方透明区域直接显示 WebView 中的豆包登录面板 -->
     <LinearLayout
         android:id="@+id/login_overlay"
         android:layout_width="match_parent"
@@ -46,7 +46,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E6000000"
+            android:background="@color/oabuod_primary_dark"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="14dp">
 
@@ -55,14 +56,37 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login_overlay_title"
                 android:textColor="@android:color/white"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <FrameLayout
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/login_qr_image"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/white"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:visibility="invisible" />
+
+                <ProgressBar
+                    android:id="@+id/login_qr_progress"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+
             <TextView
+                android:id="@+id/login_qr_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/login_overlay_hint"
+                android:layout_marginTop="8dp"
+                android:text="@string/login_waiting_qr"
                 android:textColor="#CCFFFFFF"
                 android:textSize="12sp" />
         </LinearLayout>
